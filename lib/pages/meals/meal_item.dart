@@ -4,12 +4,14 @@ import 'package:food/pages/misc/models.dart';
 
 class MealItem extends StatelessWidget {
   final String title;
+  final String id;
   final String imageUrl;
   final int duration;
   final Complexity complexity;
   final Affordability affordability;
 
   MealItem({
+    @required this.id,
     @required this.title,
     @required this.imageUrl,
     @required this.duration,
@@ -33,7 +35,7 @@ class MealItem extends StatelessWidget {
     }
   }
 
-String get affordabilityText {
+  String get affordabilityText {
     switch (affordability) {
       case Affordability.Affordable:
         return 'Affordable';
@@ -47,20 +49,15 @@ String get affordabilityText {
       default:
         return 'Unknown';
     }
-}
+  }
 
-void openMealDetail(BuildContext ctx) {
-    // Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-    //     return Meals(this.title, this.id);
-    // }));
+  void openMealDetail(BuildContext ctx) {
     Navigator.of(ctx).pushNamed(
       MealDetailPage.routeName,
-    //   arguments: {
-    //     'id': id,
-    //     'title': title,
-    //   },
+        arguments: id,
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -72,8 +69,8 @@ void openMealDetail(BuildContext ctx) {
         elevation: 4,
         margin: EdgeInsets.all(10),
         child: InkWell(
-            onTap: () => openMealDetail(context),
-                  child: Column(children: <Widget>[
+          onTap: () => openMealDetail(context),
+          child: Column(children: <Widget>[
             Stack(
               children: <Widget>[
                 ClipRRect(
